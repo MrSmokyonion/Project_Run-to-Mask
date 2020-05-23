@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public Slider m_Minimap;            //미니맵 UI
     public Text m_currentDistanceText;  //현재 거리를 알려주는 텍스트 UI
 
+    [Header("Managers")]
+    public InputController m_InputController;    //InputController 매니저
+
     private float m_DashTime = 5f;      //대쉬 아이템 지속시간
 
     public static GameManager instance; //싱글톤 패턴용 변수
@@ -38,6 +41,8 @@ public class GameManager : MonoBehaviour
     {
         m_Minimap.maxValue = 2000f;
         m_DistanceObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-5.0f, 0f);
+
+        m_InputController.m_playerState = InputController.PLAYERSTATE.Run;
     }
 
     /* Purpose: 게임 오버 시키는 함수.

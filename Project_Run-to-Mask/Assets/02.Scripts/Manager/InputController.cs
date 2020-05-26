@@ -101,6 +101,7 @@ public class InputController : MonoBehaviour
 
         m_rigid.velocity = new Vector2(0, m_JumpPower);
         m_mainCharacter.m_curJumpCnt--;
+        m_playerState = PLAYERSTATE.Jump;
     }
 
     /*
@@ -149,9 +150,22 @@ public class InputController : MonoBehaviour
                 break;
 
             case PLAYERSTATE.Run:
+                m_mainCharacter.Do_Particle("Run", true);
+                m_mainCharacter.Do_Particle("Landing", false);
                 break;
 
             case PLAYERSTATE.Jump:
+                m_mainCharacter.Do_Particle("Run", false);
+                m_mainCharacter.Do_Particle("Jump", true);
+                m_mainCharacter.Do_Particle("Landing", true);
+                break;
+
+            case PLAYERSTATE.Landing:
+                m_mainCharacter.Do_Particle("Jump", false);
+                m_mainCharacter.Do_Particle("Landing", false);
+                m_mainCharacter.Do_Particle("Landing", true);
+
+                m_playerState = PLAYERSTATE.Run;
                 break;
 
             case PLAYERSTATE.Slide:
@@ -209,6 +223,7 @@ public class InputController : MonoBehaviour
         Idle = 0,
         Run,
         Jump,
+        Landing,
         Slide,
         Dead
     }

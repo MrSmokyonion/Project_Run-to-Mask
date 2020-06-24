@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /* Purpose: 게임의 핵심적인 메커니즘을 담당하는 매니저.
@@ -12,6 +13,9 @@ public class GameManager : MonoBehaviour
     public Transform m_DistanceObject;  //진행한 거리 측정용 오브젝트
     public Slider m_Minimap;            //미니맵 UI
     public Text m_currentDistanceText;  //현재 거리를 알려주는 텍스트 UI
+
+    [Header("GameOver Objects")]
+    public Animation m_gameoverAnim;    //게임오버를 출력하는 애니메이션.
 
     [Header("Managers")]
     public InputController m_InputController;    //InputController 매니저
@@ -47,12 +51,22 @@ public class GameManager : MonoBehaviour
 
     /* Purpose: 게임 오버 시키는 함수.
      * Variable: X
-     * Notice: 
+     * Notice: [20-06-25] 게임 오버 리액션 코드 추가.
      */
     public void Do_GameOver()
     {
         Debug.Log("NOTICE!!! 게임이 종료되었습니다! ~GameManager/Do_GameOver()");
+        m_gameoverAnim.Play();
     }
+    /* Purpose: 게임을 재시작하는 함수(현재 스테이지).
+     * Variable: X
+     * Notice: 다수의 씬이 로딩되어 있을 시에 상황을 테스트 해보지 않았음.
+     */
+    public void Do_GameRestart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 
     /* Purpose: 캐릭터가 지속시간동안 지형지물을 무시하고 달리도록 해주는 함수 (대쉬 아이템)
      * Variable: X
